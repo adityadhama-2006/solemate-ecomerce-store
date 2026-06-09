@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoleMate - Amazon Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Top Navigation -->
+        <header class="top-bar">
+            <button class="icon-btn"><i data-feather="menu"></i></button>
+            <div class="logo" onclick="navigateTo('home-screen')">SoleMate</div>
+            <div class="header-icons">
+                <button class="icon-btn" onclick="navigateTo('wishlist-screen')">
+                    <i data-feather="heart"></i>
+                    <span id="wishlist-badge" class="badge hidden">0</span>
+                </button>
+                <button class="icon-btn" onclick="navigateTo('cart-checkout')">
+                    <i data-feather="shopping-cart"></i>
+                    <span id="cart-badge" class="badge hidden">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Home Screen -->
+        <section id="home-screen" class="page active">
+            <div class="search-container">
+                <i data-feather="search" class="search-icon"></i>
+                <input type="text" id="search-input" class="search-bar" placeholder="Search for sneakers...">
+            </div>
+
+            <div class="categories">
+                <div class="category active">All</div>
+                <div class="category">Nike</div>
+                <div class="category">Adidas</div>
+                <div class="category">Puma</div>
+                <div class="category">New Balance</div>
+                <div class="category">Vans</div>
+            </div>
+
+            <div class="filter-sort-row">
+                <span style="font-size: 13px; font-weight: 500;" id="results-count">8 results</span>
+                <select id="sort-select" class="sort-select">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Avg. Customer Review</option>
+                </select>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <!-- Products injected via JS -->
+            </div>
+        </section>
+
+        <!-- Product Detail Page -->
+        <section id="product-detail" class="page">
+            <button class="back-btn" onclick="navigateTo('home-screen')"><i data-feather="arrow-left"></i></button>
+            <div class="product-image-container">
+                <img id="detail-image" src="" alt="Sneaker">
+            </div>
+            <div class="product-info-container">
+                <div class="brand-tag" id="detail-brand">Brand</div>
+                <h1 id="detail-title">Product Title</h1>
+                
+                <div class="detail-rating">
+                    <span class="stars" id="detail-stars">★★★★★</span>
+                    <span class="review-count" id="detail-reviews">0 ratings</span>
+                </div>
+
+                <h2 id="detail-price">$0.00</h2>
+                
+                <div class="delivery-info">
+                    <i data-feather="truck" style="width:16px;"></i>
+                    <span><strong style="color: #007185">FREE delivery</strong> <span id="detail-delivery">Thursday, June 12</span></span>
+                </div>
+
+                <div class="stock-status in-stock" id="detail-stock">In Stock.</div>
+
+                <div class="size-selector">
+                    <h3>Select Size</h3>
+                    <div class="size-grid">
+                        <div class="size-box">7</div>
+                        <div class="size-box">8</div>
+                        <div class="size-box">9</div>
+                        <div class="size-box active">10</div>
+                        <div class="size-box">11</div>
+                        <div class="size-box">12</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 24px 0 8px; font-size: 16px;">About this item</h3>
+                <p class="description" id="detail-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+
+            <div class="related-section">
+                <h3>Customers who viewed this item also viewed</h3>
+                <div class="related-scroll" id="related-scroll">
+                    <!-- Related items injected via JS -->
+                </div>
+            </div>
+            
+            <div class="bottom-cta">
+                <button class="btn-secondary" style="width:48px; margin-top:0;" id="detail-heart" onclick="toggleWishlistDetail()">
+                    <i data-feather="heart"></i>
+                </button>
+                <button class="btn-primary" style="flex-grow:1;" id="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+            </div>
+        </section>
+
+        <!-- Wishlist Screen -->
+        <section id="wishlist-screen" class="page">
+            <div class="list-header">
+                <button class="icon-btn" onclick="navigateTo('home-screen')"><i data-feather="arrow-left"></i></button>
+                <h2>Your Wishlist</h2>
+                <div style="width: 24px;"></div>
+            </div>
+
+            <div class="item-list" id="wishlist-list">
+                <!-- Wishlist items injected via JS -->
+            </div>
+        </section>
+
+        <!-- Cart & Checkout Screen -->
+        <section id="cart-checkout" class="page">
+            <div class="list-header">
+                <button class="icon-btn" onclick="navigateTo('home-screen')"><i data-feather="arrow-left"></i></button>
+                <h2>Shopping Cart</h2>
+                <div style="width: 24px;"></div>
+            </div>
+
+            <div class="item-list" id="cart-list">
+                <!-- Cart items injected via JS -->
+            </div>
+
+            <div class="order-summary">
+                <div class="summary-line">
+                    <span>Items:</span>
+                    <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Estimated Tax:</span>
+                    <span id="summary-tax">$0.00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping & handling:</span>
+                    <span id="summary-delivery">$0.00</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Order Total:</span>
+                    <span id="summary-total">$0.00</span>
+                </div>
+            </div>
+
+            <div class="bottom-cta">
+                <button class="btn-primary" onclick="processCheckout()">Proceed to Checkout</button>
+            </div>
+        </section>
+
+        <!-- Checkout Form Screen -->
+        <section id="checkout-form-screen" class="page">
+            <div class="list-header">
+                <button class="icon-btn" onclick="navigateTo('cart-checkout')"><i data-feather="arrow-left"></i></button>
+                <h2>Checkout</h2>
+                <div style="width: 24px;"></div>
+            </div>
+
+            <form id="checkout-form" class="checkout-form" onsubmit="submitOrder(event)">
+                <div class="form-section">
+                    <h3>Contact Details</h3>
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="tel" placeholder="Phone Number" required>
+                </div>
+
+                <div class="form-section">
+                    <h3>Shipping Address</h3>
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="text" placeholder="Street Address" required>
+                    <div class="form-row">
+                        <input type="text" placeholder="City" required>
+                        <input type="text" placeholder="ZIP Code" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Payment Method</h3>
+                    <input type="text" placeholder="Card Number" maxlength="19" required>
+                    <div class="form-row">
+                        <input type="text" placeholder="MM/YY" maxlength="5" required>
+                        <input type="text" placeholder="CVV" maxlength="4" required>
+                    </div>
+                </div>
+
+                <div class="bottom-cta">
+                    <button type="submit" class="btn-primary">Place Order</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">Action Successful!</div>
+
+        <!-- Checkout Success Modal -->
+        <div id="checkout-modal" class="modal">
+            <div class="modal-content">
+                <i data-feather="check-circle" style="color: #007600; width: 48px; height: 48px; margin-bottom: 16px;"></i>
+                <h2>Order Placed, Thank You!</h2>
+                <p>Confirmation will be sent to your email.</p>
+                <button class="btn-secondary" onclick="closeModal()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
